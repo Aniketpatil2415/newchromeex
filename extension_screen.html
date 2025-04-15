@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         /* Basic CSS for the question display */
-        .question-container {
+        .question-display-area {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -16,7 +16,7 @@
             margin-bottom: 20px;
         }
 
-        .question-container h2 {
+        .question-display-area h2 {
             color: #333;
             margin-bottom: 10px;
         }
@@ -58,10 +58,14 @@
         </header>
 
         <main>
-            <section class="question-box">
-                <div id="question-display" class="question-container">
-                    <h2>Loading Today's Challenge...</h2>
+            <section class="question-display-area">
+                <h2>Question 1</h2>
+                <div id="question-display">
+                    Loading Today's Challenge...
                 </div>
+            </section>
+
+            <section class="question-box">
                 <textarea id="answer" placeholder="Write your answer here..."></textarea>
                 <button id="submit-btn">🚀 Submit Answer</button>
             </section>
@@ -131,7 +135,7 @@
         // Function to display the question and options
         const displayQuestion = (questionData) => {
             questionDisplay.innerHTML = `
-                <h2>${questionData.questionText}</h2>
+                ${questionData.questionText}
                 <ul class="options-list">
                     ${questionData.options.map((option, index) => `<li><button data-option-index="${index}">${option}</button></li>`).join('')}
                 </ul>
@@ -156,6 +160,7 @@
             });
 
             // Ensure the question section is visible when the question is displayed
+            document.querySelector('.question-display-area').style.display = 'block';
             document.querySelector('.question-box').style.display = 'block';
             document.querySelector('.streak-box').style.display = 'block'; // Keep streak visible
             isQuestionActive = true;
@@ -211,6 +216,7 @@
         // If you want to toggle visibility based on the "Challenge" link:
         challengeLink.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent the default link behavior
+            document.querySelector('.question-display-area').style.display = 'block';
             document.querySelector('.question-box').style.display = 'block';
             document.querySelector('.streak-box').style.display = 'block';
             isQuestionActive = true;
