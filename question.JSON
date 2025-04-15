@@ -1,15 +1,50 @@
 [
   {
-    "questionText": "Another new question?",
-    "correctAnswer": "Answer to another new question",
-    "options": ["A", "B", "C", "D"],
-    "id": "question2" // You might use a unique ID
+    "questionText": "What is the capital of Japan?",
+    "correctAnswer": "Tokyo",
+    "options": [
+      "Tokyo",
+      "Seoul",
+      "Beijing",
+      "Shanghai"
+    ],
+    "difficulty": "easy",
+    "category": "geography"
   },
   {
-    "questionText": "Updating the first question again?",
-    "correctAnswer": "New answer for the first question",
-    "options": ["One", "Two", "Three", "Four"],
-    "id": "question1" // To update an existing document
+    "questionText": "What is the value of pi (to two decimal places)?",
+    "correctAnswer": "3.14",
+    "options": [
+      "3.14",
+      "3.16",
+      "3.12",
+      "3.18"
+    ],
+    "difficulty": "medium",
+    "category": "math"
+  },
+  {
+    "questionText": "Which programming language is often used for web development?",
+    "correctAnswer": "JavaScript",
+    "options": [
+      "Java",
+      "Python",
+      "JavaScript",
+      "C++"
+    ],
+    "difficulty": "easy",
+    "category": "computer_science"
+  },
+  {
+    "questionText": "What is the chemical symbol for water?",
+    "correctAnswer": "H2O",
+    "options": [
+      "CO2",
+      "O2",
+      "H2O",
+      "N2"
+    ],
+    "difficulty": "easy",
+    "category": "science"
   }
-  // ... more question objects
 ]
