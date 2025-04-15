@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>FusionByte - Daily Challenge</title>
+    <title>FusionByte - Daily Coding Challenge</title>
     <link rel="stylesheet" href="extension_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
@@ -59,7 +59,7 @@
 
         <main>
             <section class="question-display-area">
-                <h2>Question 1</h2>
+                <h2>Today's Challenge</h2>
                 <div id="question-display">
                     Loading Today's Challenge...
                 </div>
@@ -89,14 +89,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
     <script>
-        // Firebase configuration
+        // Firebase configuration - REPLACE WITH YOUR CREDENTIALS
         const firebaseConfig = {
-          apiKey: "AIzaSyDGNl1qDTgmeloZRaMlNIqADYF99JAsveg",
-          authDomain: "notes-app-42c4f.firebaseapp.com",
-          projectId: "notes-app-42c4f",
-          storageBucket: "notes-app-42c4f.appspot.com",
-          messagingSenderId: "423058349540",
-          appId: "1:423058349540:web:942108589731326aa03bf1"
+            apiKey: "YOUR_API_KEY",  //  Replace with your actual API key
+            authDomain: "YOUR_AUTH_DOMAIN", // Replace with your auth domain
+            projectId: "YOUR_PROJECT_ID",    // Replace with your project ID
+            storageBucket: "YOUR_STORAGE_BUCKET",  // Replace with your storage bucket
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your messaging sender ID
+            appId: "YOUR_APP_ID"      // Replace with your app ID
         };
 
         // Initialize Firebase
@@ -111,38 +111,55 @@
         const challengeLink = document.getElementById("challenge-link"); // Get the 'Challenge' link
 
         // State to track if the question section is active
-        let isQuestionActive = true; // Initially, the challenge/question is the main view
+        let isQuestionActive = true;
 
         // Function to fetch the daily question from Firestore
         const fetchDailyQuestion = async () => {
             try {
-                const docRef = db.collection('questions').doc('question1');
-                const docSnap = await docRef.get();
+                //  Get a random document
+                const questionsCollection = db.collection('questions');
+                const snapshot = await questionsCollection.get();
+                const questionCount = snapshot.size;
 
-                if (docSnap.exists()) {
-                    const questionData = docSnap.data();
-                    displayQuestion(questionData);
-                } else {
-                    questionDisplay.innerHTML = "<p class='error-message'>Failed to load today's challenge.</p>";
-                    console.log("No such document!");
+                if (questionCount > 0) {
+                    const randomIndex = Math.floor(Math.random() * questionCount);
+                    let i = 0;
+                    let randomDoc;
+                    snapshot.forEach(doc => {
+                        if (i === randomIndex) {
+                            randomDoc = doc;
+                        }
+                        i++;
+                    });
+
+                    if (randomDoc) {
+                        const questionData = randomDoc.data();
+                        displayQuestion(questionData);
+                    }
                 }
+                else
+                {
+                    questionDisplay.innerHTML = "<p class='error-message'>No questions available.</p>";
+                    console.log("No questions available!");
+                }
+
             } catch (error) {
                 questionDisplay.innerHTML = "<p class='error-message'>Error loading challenge: " + error.message + "</p>";
                 console.error("Error fetching document:", error);
             }
         };
 
+
         // Function to display the question and options
         const displayQuestion = (questionData) => {
             questionDisplay.innerHTML = `
-                ${questionData.questionText}
+                <h2>${questionData.questionText}</h2>
                 <ul class="options-list">
                     ${questionData.options.map((option, index) => `<li><button data-option-index="${index}">${option}</button></li>`).join('')}
                 </ul>
                 <p class="correct-answer-hidden" style="display:none;">Correct Answer: ${questionData.correctAnswer}</p>
             `;
 
-            // Add event listeners to the option buttons (optional, for handling user selection)
             const optionButtons = questionDisplay.querySelectorAll('.options-list button');
             optionButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
@@ -150,19 +167,16 @@
                     const correctAnswer = questionDisplay.querySelector('.correct-answer-hidden').textContent.split(': ')[1];
                     if (selectedAnswer === correctAnswer) {
                         alert("Correct!");
-                        updateStreak(); // Increase streak on correct answer
+                        updateStreak();
                     } else {
                         alert(`Incorrect. The correct answer is: ${correctAnswer}`);
-                        // Optionally reset streak here if the logic requires
                     }
-                    // You might want to disable further selections or provide feedback
                 });
             });
 
-            // Ensure the question section is visible when the question is displayed
             document.querySelector('.question-display-area').style.display = 'block';
             document.querySelector('.question-box').style.display = 'block';
-            document.querySelector('.streak-box').style.display = 'block'; // Keep streak visible
+            document.querySelector('.streak-box').style.display = 'block';
             isQuestionActive = true;
         };
 
@@ -170,13 +184,12 @@
         const updateStreak = () => {
             const lastStreakDate = localStorage.getItem("lastStreakDate");
             const currentStreak = parseInt(localStorage.getItem("currentStreak")) || 0;
+            const currentDate = new Date().toISOString().split('T')[0];
 
-            // Check if last streak was today
             if (lastStreakDate === currentDate) {
                 console.log("Streak already increased today.");
-                return; // If already streaked today, do nothing
+                return;
             } else {
-                // Update streak count
                 const newStreak = currentStreak + 1;
                 localStorage.setItem("currentStreak", newStreak);
                 localStorage.setItem("lastStreakDate", currentDate);
@@ -185,10 +198,8 @@
             }
         };
 
-        // Function to handle submit action (you might want to adjust this based on the question type)
         submitButton.addEventListener("click", () => {
             if (answerTextArea.value.trim() !== "") {
-                // For open-ended questions, you might just track submission for streak
                 updateStreak();
                 answerTextArea.value = "";
                 alert("Answer submitted! Streak updated.");
@@ -197,37 +208,26 @@
             }
         });
 
-        // Initially fetch the question
         fetchDailyQuestion();
 
-        // Set initial streak value when page loads
         window.onload = () => {
             const storedStreak = localStorage.getItem("currentStreak");
             if (storedStreak) {
                 streakElement.textContent = storedStreak;
             } else {
-                streakElement.textContent = "0"; // Default streak if none exists
+                streakElement.textContent = "0";
             }
-            // fetchDailyQuestion is already called here, no need to repeat unless logic changes
         };
 
-        // You might want to add logic to handle navigation to other sections
-        // For now, the question section is the main content.
-        // If you want to toggle visibility based on the "Challenge" link:
         challengeLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent the default link behavior
+            e.preventDefault();
             document.querySelector('.question-display-area').style.display = 'block';
             document.querySelector('.question-box').style.display = 'block';
             document.querySelector('.streak-box').style.display = 'block';
             isQuestionActive = true;
-
-            // You might want to update the active class on the bottom nav
             document.querySelectorAll('.bottom-nav ul li a').forEach(link => link.classList.remove('active'));
             challengeLink.classList.add('active');
         });
-
-        // You would add similar event listeners for other bottom navigation links
-        // to show/hide relevant sections. For now, the question is always visible.
     </script>
 </body>
 </html>
