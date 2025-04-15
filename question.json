@@ -1,50 +1,33 @@
 [
   {
-    "questionText": "What is the capital of Japan?",
-    "correctAnswer": "Tokyo",
+    "questionText": "What is the primary function of the `useEffect` hook in React?",
+    "correctAnswer": "To handle side effects in functional components",
     "options": [
-      "Tokyo",
-      "Seoul",
-      "Beijing",
-      "Shanghai"
-    ],
-    "difficulty": "easy",
-    "category": "geography"
+      "To define the component's state",
+      "To handle side effects in functional components",
+      "To render the component's UI",
+      "To manage component props"
+    ]
   },
   {
-    "questionText": "What is the value of pi (to two decimal places)?",
-    "correctAnswer": "3.14",
+    "questionText": "Which keyword is used to declare a variable with block scope in JavaScript?",
+    "correctAnswer": "let",
     "options": [
-      "3.14",
-      "3.16",
-      "3.12",
-      "3.18"
-    ],
-    "difficulty": "medium",
-    "category": "math"
+      "var",
+      "const",
+      "let",
+      "scope"
+    ]
   },
   {
-    "questionText": "Which programming language is often used for web development?",
-    "correctAnswer": "JavaScript",
+    "questionText": "What does HTML stand for?",
+    "correctAnswer": "HyperText Markup Language",
     "options": [
-      "Java",
-      "Python",
-      "JavaScript",
-      "C++"
-    ],
-    "difficulty": "easy",
-    "category": "computer_science"
-  },
-  {
-    "questionText": "What is the chemical symbol for water?",
-    "correctAnswer": "H2O",
-    "options": [
-      "CO2",
-      "O2",
-      "H2O",
-      "N2"
-    ],
-    "difficulty": "easy",
-    "category": "science"
+      "HyperText Transfer Protocol",
+      "HyperText Markup Language",
+      "High-Level Text Machine Language",
+      "Home Tool Markup Language"
+    ]
   }
+  // ... more question objects following the same structure
 ]
