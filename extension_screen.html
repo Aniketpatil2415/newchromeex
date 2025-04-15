@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FusionByte - Daily Challenge</title>
+  <link rel="stylesheet" href="extension_style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔥 Daily Coding Challenge</h1>
+      <p>Stay consistent. Build your streak!</p>
+    </header>
+
+    <main>
+      <section class="question-box">
+        <textarea id="answer" placeholder="Write your answer here..."></textarea>
+        <button id="submit-btn">🚀 Submit Answer</button>
+      </section>
+
+      <section class="streak-box">
+        <p>🔥 Your Current Streak:</p>
+        <h3><span id="streak">0</span> Days</h3>
+      </section>
+    </main>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i><span>Home</span></a></li>
+      
+      <li><a href="#" class="active"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+      
+      <li><a href="#"><i class="fas fa-chalkboard-teacher"></i><span>Challenge</span></a></li>
+      <li><a href="#"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
+    </ul>
+  </div>
+
+  <script>
+    // Get elements
+    const submitButton = document.getElementById("submit-btn");
+    const answerTextArea = document.getElementById("answer");
+    const streakElement = document.getElementById("streak");
+
+    // Get the current date (used to track daily streak)
+    const currentDate = new Date().toLocaleDateString();
+
+    // Function to handle streak increase
+    const updateStreak = () => {
+      const lastStreakDate = localStorage.getItem("lastStreakDate");
+      const currentStreak = parseInt(localStorage.getItem("currentStreak")) || 0;
+
+      // Check if last streak was today
+      if (lastStreakDate === currentDate) {
+        console.log("Streak already increased today.");
+        return; // If already streaked today, do nothing
+      } else {
+        // Update streak count
+        const newStreak = currentStreak + 1;
+        localStorage.setItem("currentStreak", newStreak);
+        localStorage.setItem("lastStreakDate", currentDate);
+        streakElement.textContent = `${newStreak}`;
+        console.log("Streak increased!");
+      }
+    };
+
+    // Function to handle submit action
+    submitButton.addEventListener("click", () => {
+      if (answerTextArea.value.trim() !== "") {
+        // Update streak count
+        updateStreak();
+        // Clear the answer textarea after submission
+        answerTextArea.value = "";
+        alert("Answer submitted successfully! Streak updated.");
+      } else {
+        alert("Please write an answer before submitting.");
+      }
+    });
+
+    // Set initial streak value when page loads
+    window.onload = () => {
+      const storedStreak = localStorage.getItem("currentStreak");
+      if (storedStreak) {
+        streakElement.textContent = storedStreak;
+      } else {
+        streakElement.textContent = "0"; // Default streak if none exists
+      }
+    };
+  </script>
+</body>
+</html>
