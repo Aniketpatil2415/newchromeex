@@ -1,33 +1,27 @@
 [
   {
-    "questionText": "What is the primary function of the `useEffect` hook in React?",
-    "correctAnswer": "To handle side effects in functional components",
-    "options": [
-      "To define the component's state",
-      "To handle side effects in functional components",
-      "To render the component's UI",
-      "To manage component props"
-    ]
+    "questionText": "What is the capital of France?",
+    "correctAnswer": "Paris",
+    "options": ["Paris", "London", "Berlin", "Rome"]
   },
   {
-    "questionText": "Which keyword is used to declare a variable with block scope in JavaScript?",
-    "correctAnswer": "let",
-    "options": [
-      "var",
-      "const",
-      "let",
-      "scope"
-    ]
+    "questionText": "What is the highest mountain in the world?",
+    "correctAnswer": "Mount Everest",
+    "options": ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"]
   },
   {
-    "questionText": "What does HTML stand for?",
-    "correctAnswer": "HyperText Markup Language",
-    "options": [
-      "HyperText Transfer Protocol",
-      "HyperText Markup Language",
-      "High-Level Text Machine Language",
-      "Home Tool Markup Language"
-    ]
+    "questionText": "What is the chemical symbol for water?",
+    "correctAnswer": "H2O",
+    "options": ["Wo2", "H2O", "HO2", "2HO"]
+  },
+  {
+    "questionText": "Which planet is known as the 'Red Planet'?",
+    "correctAnswer": "Mars",
+    "options": ["Venus", "Mars", "Jupiter", "Saturn"]
+  },
+  {
+    "questionText": "What is the largest ocean on Earth?",
+    "correctAnswer": "Pacific Ocean",
+    "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"]
   }
-  // ... more question objects following the same structure
 ]
