@@ -1,10 +1,10 @@
 {
-  "questionText": "The actual text of the question entered by the admin.",
-  "correctAnswer": "The correct answer to the question.",
+  "questionText": "What is the capital of France?",
+  "correctAnswer": "Paris",
   "options": [
-    "The correct answer (will be the first element)",
-    "Option 1 entered by the admin",
-    "Option 2 entered by the admin",
-    "Option 3 entered by the admin (if provided)"
+    "Paris",
+    "Berlin",
+    "Madrid",
+    "Rome"
   ]
 }
