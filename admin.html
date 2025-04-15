@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Upload Question</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        textarea,
+        input[type="text"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin - Upload New Question</h1>
+
+    <div class="form-container">
+        <div class="form-group">
+            <label for="questionText">Question:</label>
+            <textarea id="questionText" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="correctAnswer">Correct Answer:</label>
+            <input type="text" id="correctAnswer">
+        </div>
+
+        <div class="form-group">
+            <label for="option1">Option 1:</label>
+            <input type="text" id="option1">
+        </div>
+
+        <div class="form-group">
+            <label for="option2">Option 2:</label>
+            <input type="text" id="option2">
+        </div>
+
+        <div class="form-group">
+            <label for="option3">Option 3:</label>
+            <input type="text" id="option3" (Optional)>
+        </div>
+
+        <button onclick="uploadQuestion()">Upload Question</button>
+
+        <div id="message"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Your Firebase configuration here
+        const firebaseConfig = {
+          apiKey: "AIzaSyDGNl1qDTgmeloZRaMlNIqADYF99JAsveg",
+          authDomain: "notes-app-42c4f.firebaseapp.com",
+          projectId: "notes-app-42c4f",
+          storageBucket: "notes-app-42c4f.appspot.com",
+          messagingSenderId: "423058349540",
+          appId: "1:423058349540:web:942108589731326aa03bf1"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(); // Initialize Firestore
+
+        function uploadQuestion() {
+            const questionText = document.getElementById('questionText').value.trim();
+            const correctAnswer = document.getElementById('correctAnswer').value.trim();
+            const option1 = document.getElementById('option1').value.trim();
+            const option2 = document.getElementById('option2').value.trim();
+            const option3 = document.getElementById('option3').value.trim();
+            const messageDiv = document.getElementById('message');
+
+            if (questionText && correctAnswer && option1 && option2) {
+                const questionData = {
+                    questionText: questionText,
+                    correctAnswer: correctAnswer,
+                    options: [correctAnswer, option1, option2, option3].filter(option => option !== "") // Filter out empty options
+                };
+
+                const questionsCollection = db.collection('questions'); // Collection ID: 'questions'
+                const questionDoc = questionsCollection.doc('question1'); // Document ID: 'question1'
+
+                questionDoc.set(questionData)
+                    .then(() => {
+                        messageDiv.textContent = 'Question uploaded successfully (previous question removed)!';
+                        document.getElementById('questionText').value = '';
+                        document.getElementById('correctAnswer').value = '';
+                        document.getElementById('option1').value = '';
+                        document.getElementById('option2').value = '';
+                        document.getElementById('option3').value = '';
+                        messageDiv.className = ''; // Remove error class if present
+                    })
+                    .catch((error) => {
+                        messageDiv.textContent = 'Error uploading question: ' + error.message;
+                        messageDiv.className = 'error-message';
+                    });
+            } else {
+                messageDiv.textContent = 'Please fill in the question and at least two options (including the correct answer).';
+                messageDiv.className = 'error-message';
+            }
+        }
+    </script>
+</body>
+</html>
