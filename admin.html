@@ -116,7 +116,7 @@
     <script>
         // Your Firebase configuration here
         const firebaseConfig = {
-          apiKey: "AIzaSyDGNl1qDTgmeloZRaMlNIqADYF99JAsveg",
+          apiKey: "YOUR_API_KEY",
           authDomain: "notes-app-42c4f.firebaseapp.com",
           projectId: "notes-app-42c4f",
           storageBucket: "notes-app-42c4f.appspot.com",
@@ -142,12 +142,12 @@
                     options: [correctAnswer, option1, option2, option3].filter(option => option !== "") // Filter out empty options
                 };
 
-                const questionsCollection = db.collection('questions'); // Collection ID: 'questions'
-                const questionDoc = questionsCollection.doc('question1'); // Document ID: 'question1'
+                const questionsCollection = db.collection('questions'); // Reference to the 'questions' collection
 
-                questionDoc.set(questionData)
-                    .then(() => {
-                        messageDiv.textContent = 'Question uploaded successfully (previous question removed)!';
+                // Use .add() to automatically generate a unique document ID
+                questionsCollection.add(questionData)
+                    .then((docRef) => {
+                        messageDiv.textContent = `Question uploaded successfully with ID: ${docRef.id}`;
                         document.getElementById('questionText').value = '';
                         document.getElementById('correctAnswer').value = '';
                         document.getElementById('option1').value = '';
