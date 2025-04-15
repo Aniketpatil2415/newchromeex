@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - FusionByte</title>
+  <link rel="stylesheet" href="register.css" />
+  <script type="module" src="register.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="register-container">
+    <div class="card">
+      <h1>🚀 Create Your Account</h1>
+      <p id="welcomeMsg">👋 Welcome User</p>
+
+      <form id="registerForm">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="username" placeholder="Full Name" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Email Address" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="text" id="phone" placeholder="Phone Number" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Create Password" required />
+        </div>
+
+        <button type="submit" id="registerBtn">Register</button>
+      </form>
+
+      <p id="errorMsg"></p>
+      <p class="switch-link">Already have an account? <a href="index.html">Login here</a></p>
+    </div>
+  </div>
+</body>
+</html>
