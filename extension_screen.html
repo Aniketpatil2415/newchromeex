@@ -43,6 +43,11 @@
         .options-list button:hover {
             background-color: #eee;
         }
+
+        /* Style for the question section in bottom nav */
+        .bottom-nav ul li:nth-child(3) a { /* Targeting the 'Challenge' link */
+            color: #007bff; /* Example active color */
+        }
     </style>
 </head>
 <body>
@@ -71,10 +76,8 @@
     <div class="bottom-nav">
         <ul>
             <li><a href="#"><i class="fas fa-home"></i><span>Home</span></a></li>
-
             <li><a href="#" class="active"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
-
-            <li><a href="#"><i class="fas fa-chalkboard-teacher"></i><span>Challenge</span></a></li>
+            <li><a href="#" id="challenge-link"><i class="fas fa-chalkboard-teacher"></i><span>Challenge</span></a></li>
             <li><a href="#"><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
         </ul>
     </div>
@@ -101,9 +104,10 @@
         const answerTextArea = document.getElementById("answer");
         const streakElement = document.getElementById("streak");
         const questionDisplay = document.getElementById("question-display");
+        const challengeLink = document.getElementById("challenge-link"); // Get the 'Challenge' link
 
-        // Get the current date (used to track daily streak)
-        const currentDate = new Date().toLocaleDateString();
+        // State to track if the question section is active
+        let isQuestionActive = true; // Initially, the challenge/question is the main view
 
         // Function to fetch the daily question from Firestore
         const fetchDailyQuestion = async () => {
@@ -150,6 +154,11 @@
                     // You might want to disable further selections or provide feedback
                 });
             });
+
+            // Ensure the question section is visible when the question is displayed
+            document.querySelector('.question-box').style.display = 'block';
+            document.querySelector('.streak-box').style.display = 'block'; // Keep streak visible
+            isQuestionActive = true;
         };
 
         // Function to handle streak increase
@@ -183,7 +192,10 @@
             }
         });
 
-        // Set initial streak value and fetch the question when page loads
+        // Initially fetch the question
+        fetchDailyQuestion();
+
+        // Set initial streak value when page loads
         window.onload = () => {
             const storedStreak = localStorage.getItem("currentStreak");
             if (storedStreak) {
@@ -191,8 +203,25 @@
             } else {
                 streakElement.textContent = "0"; // Default streak if none exists
             }
-            fetchDailyQuestion();
+            // fetchDailyQuestion is already called here, no need to repeat unless logic changes
         };
+
+        // You might want to add logic to handle navigation to other sections
+        // For now, the question section is the main content.
+        // If you want to toggle visibility based on the "Challenge" link:
+        challengeLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent the default link behavior
+            document.querySelector('.question-box').style.display = 'block';
+            document.querySelector('.streak-box').style.display = 'block';
+            isQuestionActive = true;
+
+            // You might want to update the active class on the bottom nav
+            document.querySelectorAll('.bottom-nav ul li a').forEach(link => link.classList.remove('active'));
+            challengeLink.classList.add('active');
+        });
+
+        // You would add similar event listeners for other bottom navigation links
+        // to show/hide relevant sections. For now, the question is always visible.
     </script>
 </body>
 </html>
