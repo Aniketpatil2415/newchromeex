@@ -1,10 +1,15 @@
-{
-  "questionText": "What is the capital of France?",
-  "correctAnswer": "Paris",
-  "options": [
-    "Paris",
-    "Berlin",
-    "Madrid",
-    "Rome"
-  ]
-}
+[
+  {
+    "questionText": "Another new question?",
+    "correctAnswer": "Answer to another new question",
+    "options": ["A", "B", "C", "D"],
+    "id": "question2" // You might use a unique ID
+  },
+  {
+    "questionText": "Updating the first question again?",
+    "correctAnswer": "New answer for the first question",
+    "options": ["One", "Two", "Three", "Four"],
+    "id": "question1" // To update an existing document
+  }
+  // ... more question objects
+]
