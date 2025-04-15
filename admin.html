@@ -116,17 +116,16 @@
     <script>
         // Your Firebase configuration here
         const firebaseConfig = {
-          apiKey: "AIzaSyDGNl1qDTgmeloZRaMlNIqADYF99JAsveg",
-  authDomain: "notes-app-42c4f.firebaseapp.com",
-  databaseURL: "https://notes-app-42c4f-default-rtdb.firebaseio.com",
-  projectId: "notes-app-42c4f",
-  storageBucket: "notes-app-42c4f.appspot.com",
-  messagingSenderId: "423058349540",
-  appId: "1:423058349540:web:942108589731326aa03bf1"
-};
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore(); // Initialize Firestore
+        const db = firebase.firestore();
 
         function uploadQuestion() {
             const questionText = document.getElementById('questionText').value.trim();
@@ -140,13 +139,10 @@
                 const questionData = {
                     questionText: questionText,
                     correctAnswer: correctAnswer,
-                    options: [correctAnswer, option1, option2, option3].filter(option => option !== "") // Filter out empty options
+                    options: [correctAnswer, option1, option2, option3].filter(option => option !== "")
                 };
 
-                const questionsCollection = db.collection('questions'); // Reference to the 'questions' collection
-
-                // Use .add() to automatically generate a unique document ID
-                questionsCollection.add(questionData)
+                db.collection('questions').add(questionData)
                     .then((docRef) => {
                         messageDiv.textContent = `Question uploaded successfully with ID: ${docRef.id}`;
                         document.getElementById('questionText').value = '';
@@ -154,7 +150,7 @@
                         document.getElementById('option1').value = '';
                         document.getElementById('option2').value = '';
                         document.getElementById('option3').value = '';
-                        messageDiv.className = ''; // Remove error class if present
+                        messageDiv.className = '';
                     })
                     .catch((error) => {
                         messageDiv.textContent = 'Error uploading question: ' + error.message;
